@@ -11,13 +11,13 @@ My jobs are going to use TypeScript to develop/build the applications in which t
 
 I found that if I clone a Aurelia repository, then run `gulp build-amd` , the generated code is correct. So, I create some scripts to clone, pull, generate AMD distribution, generate RequireJS configuration for Aurelia packages.
 
-The main script is written in [crawler.js](http://github.com/kanvuduc/aurelia-amd/crawler.js) file, which I make use of Github API to get all Aurelia package details then do generate my scripts.
+The main script is written in [crawler.js](https://github.com/kanvuduc/aurelia-amd/blob/master/crawler.js) file, which I make use of Github API to get all Aurelia package details then do generate my scripts.
 
 The final result is all included and indexed for ease of use:
 
-    1. [clone-all](http://github.com/kanvuduc/aurelia-amd/1.%20clone-all.sh)
-    2. [pull-all](http://github.com/kanvuduc/aurelia-amd/2.%20pull-all.sh)(cmd)
-    3. [npm-install](http://github.com/kanvuduc/aurelia-amd/3.%20npm-install.sh)
-    4. [build-amd](http://github.com/kanvuduc/aurelia-amd/4.%20build-amd.sh)
-    5. [requirejs-config](http://github.com/kanvuduc/aurelia-amd/requirejs-config.js)
-    6. Other generated Aurelia packages in AMD modules 
+ 1. [clone-all](https://github.com/kanvuduc/aurelia-amd/blob/master/1.%20clone-all.sh)
+ 2. [pull-all](https://github.com/kanvuduc/aurelia-amd/blob/master/2.%20pull-all.sh)
+ 3. [npm-install](https://github.com/kanvuduc/aurelia-amd/blob/master/3.%20npm-install.sh)
+ 4. [build-amd](https://github.com/kanvuduc/aurelia-amd/blob/master/4.%20build-amd.sh)
+ 5. [requirejs-config](https://github.com/kanvuduc/aurelia-amd/blob/master/requirejs-config.js) 
+ 6. Other generated Aurelia packages in AMD modules
