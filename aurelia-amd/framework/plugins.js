@@ -1,154 +1,129 @@
 define(['exports', 'core-js', 'aurelia-logging', 'aurelia-metadata'], function (exports, _coreJs, _aureliaLogging, _aureliaMetadata) {
-    'use strict';
+  'use strict';
 
-    var _interopRequire = function (obj) {
-        return obj && obj.__esModule ? obj['default'] : obj;
-    };
+  var _interopRequire = function (obj) { return obj && obj.__esModule ? obj['default'] : obj; };
 
-    var _classCallCheck = function (instance, Constructor) {
-        if (!(instance instanceof Constructor)) {
-            throw new TypeError('Cannot call a class as a function');
-        }
-    };
+  var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } };
 
-    var _createClass = (function () {
-        function defineProperties(target, props) {
-            for (var i = 0; i < props.length; i++) {
-                var descriptor = props[i];
-                descriptor.enumerable = descriptor.enumerable || false;
-                descriptor.configurable = true;
-                if ('value' in descriptor) descriptor.writable = true;
-                Object.defineProperty(target, descriptor.key, descriptor);
-            }
-        }
+  var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-        return function (Constructor, protoProps, staticProps) {
-            if (protoProps) defineProperties(Constructor.prototype, protoProps);
-            if (staticProps) defineProperties(Constructor, staticProps);
-            return Constructor;
-        };
-    })();
+  Object.defineProperty(exports, '__esModule', {
+    value: true
+  });
 
-    Object.defineProperty(exports, '__esModule', {
-        value: true
-    });
+  var _core = _interopRequire(_coreJs);
 
-    var _core = _interopRequire(_coreJs);
+  var logger = _aureliaLogging.getLogger('aurelia');
 
-    var logger = _aureliaLogging.getLogger('aurelia');
+  function loadPlugin(aurelia, loader, info) {
+    logger.debug('Loading plugin ' + info.moduleId + '.');
 
-    function loadPlugin(aurelia, loader, info) {
-        logger.debug('Loading plugin ' + info.moduleId + '.');
+    aurelia.currentPluginId = info.moduleId;
 
-        aurelia.currentPluginId = info.moduleId;
+    return loader.loadModule(info.moduleId).then(function (exportedValue) {
+      if ('install' in exportedValue) {
+        var result = exportedValue.install(aurelia, info.config || {});
 
-        return loader.loadModule(info.moduleId).then(function (exportedValue) {
-            if ('install' in exportedValue) {
-                var result = exportedValue.install(aurelia, info.config || {});
-
-                if (result) {
-                    return result.then(function () {
-                        aurelia.currentPluginId = null;
-                        logger.debug('Installed plugin ' + info.moduleId + '.');
-                    });
-                } else {
-                    logger.debug('Installed plugin ' + info.moduleId + '.');
-                }
-            } else {
-                logger.debug('Loaded plugin ' + info.moduleId + '.');
-            }
-
+        if (result) {
+          return result.then(function () {
             aurelia.currentPluginId = null;
-        });
+            logger.debug('Installed plugin ' + info.moduleId + '.');
+          });
+        } else {
+          logger.debug('Installed plugin ' + info.moduleId + '.');
+        }
+      } else {
+        logger.debug('Loaded plugin ' + info.moduleId + '.');
+      }
+
+      aurelia.currentPluginId = null;
+    });
+  }
+
+  var Plugins = (function () {
+    function Plugins(aurelia) {
+      _classCallCheck(this, Plugins);
+
+      this.aurelia = aurelia;
+      this.info = [];
+      this.processed = false;
     }
 
-    var Plugins = (function () {
-        function Plugins(aurelia) {
-            _classCallCheck(this, Plugins);
-
-            this.aurelia = aurelia;
-            this.info = [];
-            this.processed = false;
+    _createClass(Plugins, [{
+      key: 'plugin',
+      value: (function (_plugin) {
+        function plugin(_x, _x2) {
+          return _plugin.apply(this, arguments);
         }
 
-        _createClass(Plugins, [{
-            key: 'plugin',
-            value: (function (_plugin) {
-                function plugin(_x, _x2) {
-                    return _plugin.apply(this, arguments);
-                }
+        plugin.toString = function () {
+          return _plugin.toString();
+        };
 
-                plugin.toString = function () {
-                    return _plugin.toString();
-                };
+        return plugin;
+      })(function (moduleId, config) {
+        var plugin = { moduleId: moduleId, config: config || {} };
 
-                return plugin;
-            })(function (moduleId, config) {
-                var plugin = {moduleId: moduleId, config: config || {}};
+        if (this.processed) {
+          loadPlugin(this.aurelia, this.aurelia.loader, plugin);
+        } else {
+          this.info.push(plugin);
+        }
 
-                if (this.processed) {
-                    loadPlugin(this.aurelia, this.aurelia.loader, plugin);
-                } else {
-                    this.info.push(plugin);
-                }
-
-                return this;
-            })
-        }, {
-            key: 'es5',
-            value: function es5() {
-                Function.prototype.computed = function (computedProperties) {
-                    for (var key in computedProperties) {
-                        if (computedProperties.hasOwnProperty(key)) {
-                            Object.defineProperty(this.prototype, key, {
-                                get: computedProperties[key],
-                                enumerable: true
-                            });
-                        }
-                    }
-                };
-
-                return this;
+        return this;
+      })
+    }, {
+      key: 'es5',
+      value: function es5() {
+        Function.prototype.computed = function (computedProperties) {
+          for (var key in computedProperties) {
+            if (computedProperties.hasOwnProperty(key)) {
+              Object.defineProperty(this.prototype, key, { get: computedProperties[key], enumerable: true });
             }
-        }, {
-            key: '_process',
-            value: function _process() {
-                var _this = this;
+          }
+        };
 
-                var aurelia = this.aurelia,
-                    loader = aurelia.loader,
-                    info = this.info,
-                    current;
+        return this;
+      }
+    }, {
+      key: '_process',
+      value: function _process() {
+        var _this = this;
 
-                if (this.processed) {
-                    return;
-                }
+        var aurelia = this.aurelia,
+            loader = aurelia.loader,
+            info = this.info,
+            current;
 
-                var next = (function (_next) {
-                    function next() {
-                        return _next.apply(this, arguments);
-                    }
+        if (this.processed) {
+          return;
+        }
 
-                    next.toString = function () {
-                        return _next.toString();
-                    };
+        var next = (function (_next) {
+          function next() {
+            return _next.apply(this, arguments);
+          }
 
-                    return next;
-                })(function () {
-                    if (current = info.shift()) {
-                        return loadPlugin(aurelia, loader, current).then(next);
-                    }
+          next.toString = function () {
+            return _next.toString();
+          };
 
-                    _this.processed = true;
-                    return Promise.resolve();
-                });
+          return next;
+        })(function () {
+          if (current = info.shift()) {
+            return loadPlugin(aurelia, loader, current).then(next);
+          }
 
-                return next();
-            }
-        }]);
+          _this.processed = true;
+          return Promise.resolve();
+        });
 
-        return Plugins;
-    })();
+        return next();
+      }
+    }]);
 
-    exports.Plugins = Plugins;
+    return Plugins;
+  })();
+
+  exports.Plugins = Plugins;
 });

@@ -1,0 +1,27 @@
+{
+  "name": "Aurelia-Amd",
+  "version": "0.1.0",
+  "homepage": "https://github.com/kanvuduc/aurelia-amd",
+  "authors": [
+    "Tuyen Vu Duc <kan.vuduc@gmail.com>"
+  ],
+  "description": "A cope of Aurelia Amd for demontrastrion in TypeScript",
+  "main": "main.js",
+  "moduleType": [
+    "amd"
+  ],
+  "keywords": [
+    "Aurelia",
+    "Amd",
+    "RequireJS",
+    "TypeScript",
+    "JavaScript"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "core.js": "~0.8.3",
+    "bootstrap": "~3.3.4",
+    "fontawesome": "~4.3.0",
+    "requirejs": "~2.1.17"
+  }
+}

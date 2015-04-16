@@ -1,28 +1,28 @@
 define(['exports'], function (exports) {
-    'use strict';
+  'use strict';
 
-    Object.defineProperty(exports, '__esModule', {
-        value: true
-    });
-    exports.processPotential = processPotential;
+  Object.defineProperty(exports, '__esModule', {
+    value: true
+  });
+  exports.processPotential = processPotential;
 
-    function processPotential(obj, resolve, reject) {
-        if (obj && typeof obj.then === 'function') {
-            var dfd = obj.then(resolve);
+  function processPotential(obj, resolve, reject) {
+    if (obj && typeof obj.then === 'function') {
+      var dfd = obj.then(resolve);
 
-            if (typeof dfd['catch'] === 'function') {
-                return dfd['catch'](reject);
-            } else if (typeof dfd.fail === 'function') {
-                return dfd.fail(reject);
-            }
+      if (typeof dfd['catch'] === 'function') {
+        return dfd['catch'](reject);
+      } else if (typeof dfd.fail === 'function') {
+        return dfd.fail(reject);
+      }
 
-            return dfd;
-        } else {
-            try {
-                return resolve(obj);
-            } catch (error) {
-                return reject(error);
-            }
-        }
+      return dfd;
+    } else {
+      try {
+        return resolve(obj);
+      } catch (error) {
+        return reject(error);
+      }
     }
+  }
 });

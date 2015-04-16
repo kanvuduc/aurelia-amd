@@ -1,69 +1,47 @@
 define(['exports', 'core-js'], function (exports, _coreJs) {
-    'use strict';
+  'use strict';
 
-    var _interopRequire = function (obj) {
-        return obj && obj.__esModule ? obj['default'] : obj;
-    };
+  var _interopRequire = function (obj) { return obj && obj.__esModule ? obj['default'] : obj; };
 
-    var _classCallCheck = function (instance, Constructor) {
-        if (!(instance instanceof Constructor)) {
-            throw new TypeError('Cannot call a class as a function');
-        }
-    };
+  var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } };
 
-    var _createClass = (function () {
-        function defineProperties(target, props) {
-            for (var i = 0; i < props.length; i++) {
-                var descriptor = props[i];
-                descriptor.enumerable = descriptor.enumerable || false;
-                descriptor.configurable = true;
-                if ('value' in descriptor) descriptor.writable = true;
-                Object.defineProperty(target, descriptor.key, descriptor);
-            }
-        }
+  var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-        return function (Constructor, protoProps, staticProps) {
-            if (protoProps) defineProperties(Constructor.prototype, protoProps);
-            if (staticProps) defineProperties(Constructor, staticProps);
-            return Constructor;
-        };
-    })();
+  Object.defineProperty(exports, '__esModule', {
+    value: true
+  });
+  exports.isNavigationCommand = isNavigationCommand;
 
-    Object.defineProperty(exports, '__esModule', {
-        value: true
-    });
-    exports.isNavigationCommand = isNavigationCommand;
+  var _core = _interopRequire(_coreJs);
 
-    var _core = _interopRequire(_coreJs);
+  function isNavigationCommand(obj) {
+    return obj && typeof obj.navigate === 'function';
+  }
 
-    function isNavigationCommand(obj) {
-        return obj && typeof obj.navigate === 'function';
+  var Redirect = (function () {
+    function Redirect(url, options) {
+      _classCallCheck(this, Redirect);
+
+      this.url = url;
+      this.options = Object.assign({ trigger: true, replace: true }, options || {});
+      this.shouldContinueProcessing = false;
     }
 
-    var Redirect = (function () {
-        function Redirect(url, options) {
-            _classCallCheck(this, Redirect);
+    _createClass(Redirect, [{
+      key: 'setRouter',
+      value: function setRouter(router) {
+        this.router = router;
+      }
+    }, {
+      key: 'navigate',
+      value: function navigate(appRouter) {
+        var navigatingRouter = this.options.useAppRouter ? appRouter : this.router || appRouter;
+        navigatingRouter.navigate(this.url, this.options);
+      }
+    }]);
 
-            this.url = url;
-            this.options = Object.assign({trigger: true, replace: true}, options || {});
-            this.shouldContinueProcessing = false;
-        }
+    return Redirect;
+  })();
 
-        _createClass(Redirect, [{
-            key: 'setRouter',
-            value: function setRouter(router) {
-                this.router = router;
-            }
-        }, {
-            key: 'navigate',
-            value: function navigate(appRouter) {
-                var navigatingRouter = this.options.useAppRouter ? appRouter : this.router || appRouter;
-                navigatingRouter.navigate(this.url, this.options);
-            }
-        }]);
-
-        return Redirect;
-    })();
-
-    exports.Redirect = Redirect;
+  exports.Redirect = Redirect;
 });

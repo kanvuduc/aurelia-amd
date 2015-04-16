@@ -1,0 +1,30 @@
+{
+  "name": "Aurelia-Amd",
+  "version": "0.1.0",
+  "description": "A copy of Aurelia-Amd generated scripts",
+  "main": "crawler.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kanvuduc/aurelia-amd.git"
+  },
+  "keywords": [
+    "Aurelia",
+    "Amd",
+    "TypeScript",
+    "JavaScript"
+  ],
+  "author": "Vu Duc Tuyen (kanvuduc)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kanvuduc/aurelia-amd/issues"
+  },
+  "homepage": "https://github.com/kanvuduc/aurelia-amd",
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "require-dir": "^0.3.0"
+  },
+  "dependencies": {}
+}

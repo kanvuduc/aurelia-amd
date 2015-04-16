@@ -1,176 +1,125 @@
 define(['exports', 'aurelia-path'], function (exports, _aureliaPath) {
-    'use strict';
+  'use strict';
 
-    var _get = function get(object, property, receiver) {
-        var desc = Object.getOwnPropertyDescriptor(object, property);
-        if (desc === undefined) {
-            var parent = Object.getPrototypeOf(object);
-            if (parent === null) {
-                return undefined;
-            } else {
-                return get(parent, property, receiver);
-            }
-        } else if ('value' in desc) {
-            return desc.value;
-        } else {
-            var getter = desc.get;
-            if (getter === undefined) {
-                return undefined;
-            }
-            return getter.call(receiver);
-        }
-    };
+  var _get = function get(object, property, receiver) { var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-    var _inherits = function (subClass, superClass) {
-        if (typeof superClass !== 'function' && superClass !== null) {
-            throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
-        }
-        subClass.prototype = Object.create(superClass && superClass.prototype, {
-            constructor: {
-                value: subClass,
-                enumerable: false,
-                writable: true,
-                configurable: true
-            }
-        });
-        if (superClass) subClass.__proto__ = superClass;
-    };
+  var _inherits = function (subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; };
 
-    var _classCallCheck = function (instance, Constructor) {
-        if (!(instance instanceof Constructor)) {
-            throw new TypeError('Cannot call a class as a function');
-        }
-    };
+  var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } };
 
-    var _createClass = (function () {
-        function defineProperties(target, props) {
-            for (var i = 0; i < props.length; i++) {
-                var descriptor = props[i];
-                descriptor.enumerable = descriptor.enumerable || false;
-                descriptor.configurable = true;
-                if ('value' in descriptor) descriptor.writable = true;
-                Object.defineProperty(target, descriptor.key, descriptor);
-            }
-        }
+  var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-        return function (Constructor, protoProps, staticProps) {
-            if (protoProps) defineProperties(Constructor.prototype, protoProps);
-            if (staticProps) defineProperties(Constructor, staticProps);
-            return Constructor;
-        };
-    })();
+  Object.defineProperty(exports, '__esModule', {
+    value: true
+  });
 
-    Object.defineProperty(exports, '__esModule', {
-        value: true
-    });
-
-    function register(lookup, name, resource, type) {
-        if (!name) {
-            return;
-        }
-
-        var existing = lookup[name];
-        if (existing) {
-            if (existing != resource) {
-                throw new Error('Attempted to register ' + type + ' when one with the same name already exists. Name: ' + name + '.');
-            }
-
-            return;
-        }
-
-        lookup[name] = resource;
+  function register(lookup, name, resource, type) {
+    if (!name) {
+      return;
     }
 
-    var ResourceRegistry = (function () {
-        function ResourceRegistry() {
-            _classCallCheck(this, ResourceRegistry);
+    var existing = lookup[name];
+    if (existing) {
+      if (existing != resource) {
+        throw new Error('Attempted to register ' + type + ' when one with the same name already exists. Name: ' + name + '.');
+      }
 
-            this.attributes = {};
-            this.elements = {};
-            this.valueConverters = {};
-            this.attributeMap = {};
-            this.baseResourceUrl = '';
-        }
+      return;
+    }
 
-        _createClass(ResourceRegistry, [{
-            key: 'registerElement',
-            value: function registerElement(tagName, behavior) {
-                register(this.elements, tagName, behavior, 'an Element');
-            }
-        }, {
-            key: 'getElement',
-            value: function getElement(tagName) {
-                return this.elements[tagName];
-            }
-        }, {
-            key: 'registerAttribute',
-            value: function registerAttribute(attribute, behavior, knownAttribute) {
-                this.attributeMap[attribute] = knownAttribute;
-                register(this.attributes, attribute, behavior, 'an Attribute');
-            }
-        }, {
-            key: 'getAttribute',
-            value: function getAttribute(attribute) {
-                return this.attributes[attribute];
-            }
-        }, {
-            key: 'registerValueConverter',
-            value: function registerValueConverter(name, valueConverter) {
-                register(this.valueConverters, name, valueConverter, 'a ValueConverter');
-            }
-        }, {
-            key: 'getValueConverter',
-            value: function getValueConverter(name) {
-                return this.valueConverters[name];
-            }
-        }]);
+    lookup[name] = resource;
+  }
 
-        return ResourceRegistry;
-    })();
+  var ResourceRegistry = (function () {
+    function ResourceRegistry() {
+      _classCallCheck(this, ResourceRegistry);
 
-    exports.ResourceRegistry = ResourceRegistry;
+      this.attributes = {};
+      this.elements = {};
+      this.valueConverters = {};
+      this.attributeMap = {};
+      this.baseResourceUrl = '';
+    }
 
-    var ViewResources = (function (_ResourceRegistry) {
-        function ViewResources(parent, viewUrl) {
-            _classCallCheck(this, ViewResources);
+    _createClass(ResourceRegistry, [{
+      key: 'registerElement',
+      value: function registerElement(tagName, behavior) {
+        register(this.elements, tagName, behavior, 'an Element');
+      }
+    }, {
+      key: 'getElement',
+      value: function getElement(tagName) {
+        return this.elements[tagName];
+      }
+    }, {
+      key: 'registerAttribute',
+      value: function registerAttribute(attribute, behavior, knownAttribute) {
+        this.attributeMap[attribute] = knownAttribute;
+        register(this.attributes, attribute, behavior, 'an Attribute');
+      }
+    }, {
+      key: 'getAttribute',
+      value: function getAttribute(attribute) {
+        return this.attributes[attribute];
+      }
+    }, {
+      key: 'registerValueConverter',
+      value: function registerValueConverter(name, valueConverter) {
+        register(this.valueConverters, name, valueConverter, 'a ValueConverter');
+      }
+    }, {
+      key: 'getValueConverter',
+      value: function getValueConverter(name) {
+        return this.valueConverters[name];
+      }
+    }]);
 
-            _get(Object.getPrototypeOf(ViewResources.prototype), 'constructor', this).call(this);
-            this.parent = parent;
-            this.viewUrl = viewUrl;
-            this.valueConverterLookupFunction = this.getValueConverter.bind(this);
-        }
+    return ResourceRegistry;
+  })();
 
-        _inherits(ViewResources, _ResourceRegistry);
+  exports.ResourceRegistry = ResourceRegistry;
 
-        _createClass(ViewResources, [{
-            key: 'relativeToView',
-            value: function relativeToView(path) {
-                return _aureliaPath.relativeToFile(path, this.viewUrl);
-            }
-        }, {
-            key: 'getElement',
-            value: function getElement(tagName) {
-                return this.elements[tagName] || this.parent.getElement(tagName);
-            }
-        }, {
-            key: 'mapAttribute',
-            value: function mapAttribute(attribute) {
-                return this.attributeMap[attribute] || this.parent.attributeMap[attribute];
-            }
-        }, {
-            key: 'getAttribute',
-            value: function getAttribute(attribute) {
-                return this.attributes[attribute] || this.parent.getAttribute(attribute);
-            }
-        }, {
-            key: 'getValueConverter',
-            value: function getValueConverter(name) {
-                return this.valueConverters[name] || this.parent.getValueConverter(name);
-            }
-        }]);
+  var ViewResources = (function (_ResourceRegistry) {
+    function ViewResources(parent, viewUrl) {
+      _classCallCheck(this, ViewResources);
 
-        return ViewResources;
-    })(ResourceRegistry);
+      _get(Object.getPrototypeOf(ViewResources.prototype), 'constructor', this).call(this);
+      this.parent = parent;
+      this.viewUrl = viewUrl;
+      this.valueConverterLookupFunction = this.getValueConverter.bind(this);
+    }
 
-    exports.ViewResources = ViewResources;
+    _inherits(ViewResources, _ResourceRegistry);
+
+    _createClass(ViewResources, [{
+      key: 'relativeToView',
+      value: function relativeToView(path) {
+        return _aureliaPath.relativeToFile(path, this.viewUrl);
+      }
+    }, {
+      key: 'getElement',
+      value: function getElement(tagName) {
+        return this.elements[tagName] || this.parent.getElement(tagName);
+      }
+    }, {
+      key: 'mapAttribute',
+      value: function mapAttribute(attribute) {
+        return this.attributeMap[attribute] || this.parent.attributeMap[attribute];
+      }
+    }, {
+      key: 'getAttribute',
+      value: function getAttribute(attribute) {
+        return this.attributes[attribute] || this.parent.getAttribute(attribute);
+      }
+    }, {
+      key: 'getValueConverter',
+      value: function getValueConverter(name) {
+        return this.valueConverters[name] || this.parent.getValueConverter(name);
+      }
+    }]);
+
+    return ViewResources;
+  })(ResourceRegistry);
+
+  exports.ViewResources = ViewResources;
 });

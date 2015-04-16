@@ -9,7 +9,7 @@
 
 require.config({
     baseUrl: '',
-    path: [],
+    paths: {},
     packages: [
         {
             "name": "aurelia-animator-css",
@@ -128,3 +128,5 @@ require.config({
         }
     ]
 });
+
+require(['aurelia-bootstrapper'], function(){});
