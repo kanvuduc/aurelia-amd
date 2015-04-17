@@ -124,4 +124,26 @@ require.config({
     ]
 });
 
-require(['aurelia-loader-default', 'aurelia-bootstrapper'], function(){});
+require([
+    'aurelia-loader',
+    'aurelia-loader-default',
+    'aurelia-path',
+    'aurelia-task-queue',
+    'aurelia-logging',
+    'aurelia-logging-console',
+    'aurelia-history',
+    'aurelia-history-browser',
+    'aurelia-event-aggregator',
+    'aurelia-framework',
+    'aurelia-metadata',
+    'aurelia-binding',
+    'aurelia-templating',
+    'aurelia-dependency-injection',
+    'aurelia-router',
+    'aurelia-templating-binding',
+    'aurelia-templating-resources',
+    'aurelia-templating-router',
+    'aurelia-route-recognizer',
+    'aurelia-http-client',
+    'aurelia-bootstrapper'
+], function(){});

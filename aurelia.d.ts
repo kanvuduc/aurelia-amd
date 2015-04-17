@@ -323,6 +323,21 @@ declare module "aurelia-framework" {
         withProperty(property: string): void;
     }
 
+    class Decorators {
+        static bindable(attribute?: string): Decorators;
+        static withOptions(attribute?: string): Decorators;
+        static attachedBehavior(attribute: string): Decorators;
+        static syncChildren(property: string, changeHandler: string, selector: string): Decorators;
+        static customElement(tagName: string): Decorators;
+        static useShadowDOM(): Decorators;
+        static elementConfig(): Decorators;
+        static templateController(attribute: string): Decorators;
+        static useView(path: string): Decorators;
+        static noView(): Decorators;
+        static transient(): Decorators;
+        static skipContentProcessing(): Decorators;
+    }
+
     class Behavior {
         static withProperty(propertyName: string, changeHandler?: string, defaultVale?: string): Behavior;
         static withOptions(attribute?: string): Behavior;

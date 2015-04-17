@@ -3,8 +3,9 @@ define(["require", "exports", 'aurelia-framework'], function (require, exports, 
     var NavBar = (function () {
         function NavBar() {
         }
-        NavBar.metadata = function () {
-            return _aureliaFramework.Behavior.customElement('nav-bar').withProperty('router');
+        NavBar.decorators = function () {
+            debugger;
+            return _aureliaFramework.Decorators.customElement('nav-bar').bindable('router');
         };
         return NavBar;
     })();
