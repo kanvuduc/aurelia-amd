@@ -16,6 +16,7 @@ git clone git://github.com/aurelia/logging.git
 git clone git://github.com/aurelia/logging-console.git
 git clone git://github.com/aurelia/metadata.git
 git clone git://github.com/aurelia/path.git
+git clone git://github.com/aurelia/registry.git
 git clone git://github.com/aurelia/route-recognizer.git
 git clone git://github.com/aurelia/router.git
 git clone git://github.com/aurelia/task-queue.git
@@ -23,3 +24,4 @@ git clone git://github.com/aurelia/templating.git
 git clone git://github.com/aurelia/templating-binding.git
 git clone git://github.com/aurelia/templating-resources.git
 git clone git://github.com/aurelia/templating-router.git
+git clone git://github.com/aurelia/validation.git

@@ -1,9 +1,7 @@
 define(['exports'], function (exports) {
   'use strict';
 
-  Object.defineProperty(exports, '__esModule', {
-    value: true
-  });
+  exports.__esModule = true;
   exports.relativeToFile = relativeToFile;
   exports.join = join;
   exports.buildQueryString = buildQueryString;
@@ -44,7 +42,7 @@ define(['exports'], function (exports) {
   }
 
   function join(path1, path2) {
-    var url1, url2, url3, i, ii, urlPrefix;
+    var url1, url2, url3, i, ii, urlPrefix, trailingSlash;
 
     if (!path1) {
       return path2;
@@ -55,6 +53,7 @@ define(['exports'], function (exports) {
     }
 
     urlPrefix = path1.indexOf('//') === 0 ? '//' : path1.indexOf('/') === 0 ? '/' : '';
+    trailingSlash = path2.slice(-1) == '/' ? '/' : '';
 
     url1 = path1.split('/');
     url2 = path2.split('/');
@@ -80,7 +79,7 @@ define(['exports'], function (exports) {
       }
     }
 
-    return urlPrefix + url3.join('/').replace(/\:\//g, '://');;
+    return urlPrefix + url3.join('/').replace(/\:\//g, '://') + trailingSlash;
   }
 
   var r20 = /%20/g,

@@ -46,6 +46,9 @@ cd ../../
 cd ./aurelia-packages/path
 git pull git://github.com/aurelia/path.git
 cd ../../
+cd ./aurelia-packages/registry
+git pull git://github.com/aurelia/registry.git
+cd ../../
 cd ./aurelia-packages/route-recognizer
 git pull git://github.com/aurelia/route-recognizer.git
 cd ../../
@@ -66,3 +69,6 @@ git pull git://github.com/aurelia/templating-resources.git
 cd ../../
 cd ./aurelia-packages/templating-router
 git pull git://github.com/aurelia/templating-router.git
+cd ../../
+cd ./aurelia-packages/validation
+git pull git://github.com/aurelia/validation.git

@@ -78,6 +78,11 @@ gulp build-amd
 mkdir -p ../../aurelia-amd/path
 cp -r ./dist/amd/ ../../aurelia-amd/path
 cd ../../
+cd ./aurelia-packages/registry
+gulp build-amd
+mkdir -p ../../aurelia-amd/registry
+cp -r ./dist/amd/ ../../aurelia-amd/registry
+cd ../../
 cd ./aurelia-packages/route-recognizer
 gulp build-amd
 mkdir -p ../../aurelia-amd/route-recognizer
@@ -112,3 +117,8 @@ cd ./aurelia-packages/templating-router
 gulp build-amd
 mkdir -p ../../aurelia-amd/templating-router
 cp -r ./dist/amd/ ../../aurelia-amd/templating-router
+cd ../../
+cd ./aurelia-packages/validation
+gulp build-amd
+mkdir -p ../../aurelia-amd/validation
+cp -r ./dist/amd/ ../../aurelia-amd/validation

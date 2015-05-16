@@ -45,7 +45,7 @@
         completed = false;
 
     jQuery.getJSON(
-        'https://api.github.com/users/aurelia/repos',
+        'https://api.github.com/users/aurelia/repos?per_page=100',
         function (response) {
             response.forEach(function (item, index) {
 

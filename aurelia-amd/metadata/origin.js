@@ -5,22 +5,19 @@ define(['exports', 'core-js'], function (exports, _coreJs) {
 
   var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } };
 
-  var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-  Object.defineProperty(exports, '__esModule', {
-    value: true
-  });
+  exports.__esModule = true;
 
   var _core = _interopRequire(_coreJs);
 
-  var originStorage = new Map();
+  var originStorage = new Map(),
+      unknownOrigin = Object.freeze({ moduleId: undefined, moduleMember: undefined });
 
-  function ensureType(value) {
-    if (value instanceof Origin) {
-      return value;
-    }
+  if (!window.System) {
+    window.System = {};
+  }
 
-    return new Origin(value);
+  if (!System.forEachModule) {
+    System.forEachModule = function () {};
   }
 
   var Origin = (function () {
@@ -31,31 +28,32 @@ define(['exports', 'core-js'], function (exports, _coreJs) {
       this.moduleMember = moduleMember;
     }
 
-    _createClass(Origin, null, [{
-      key: 'get',
-      value: function get(fn) {
-        var origin = originStorage.get(fn);
+    Origin.get = function get(fn) {
+      var origin = originStorage.get(fn);
 
-        if (origin !== undefined) {
-          return origin;
-        }
+      if (origin === undefined) {
+        System.forEachModule(function (key, value) {
+          for (var name in value) {
+            var exp = value[name];
+            if (exp === fn) {
+              originStorage.set(fn, origin = new Origin(key, name));
+              return;
+            }
+          }
 
-        if (typeof fn.origin === 'function') {
-          originStorage.set(fn, origin = ensureType(fn.origin()));
-        } else if (fn.origin !== undefined) {
-          originStorage.set(fn, origin = ensureType(fn.origin));
-        }
-
-        return origin;
+          if (value === fn) {
+            originStorage.set(fn, origin = new Origin(key, 'default'));
+            return;
+          }
+        });
       }
-    }, {
-      key: 'set',
-      value: function set(fn, origin) {
-        if (Origin.get(fn) === undefined) {
-          originStorage.set(fn, origin);
-        }
-      }
-    }]);
+
+      return origin || unknownOrigin;
+    };
+
+    Origin.set = function set(fn, origin) {
+      originStorage.set(fn, origin);
+    };
 
     return Origin;
   })();

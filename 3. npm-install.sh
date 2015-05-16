@@ -46,6 +46,9 @@ cd ../../
 cd ./aurelia-packages/path
 npm install 
 cd ../../
+cd ./aurelia-packages/registry
+npm install 
+cd ../../
 cd ./aurelia-packages/route-recognizer
 npm install 
 cd ../../
@@ -66,3 +69,6 @@ npm install
 cd ../../
 cd ./aurelia-packages/templating-router
 npm install 
+cd ../../
+cd ./aurelia-packages/validation
+npm install
